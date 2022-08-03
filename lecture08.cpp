@@ -185,7 +185,7 @@ int main()
 
 
 
-/*
+
 // Q7 Write a program to print the nth fibonacci number..........
 #include<iostream>
 
@@ -213,7 +213,7 @@ int main()
     cout<<NthFibonacci(n);
 }
 
-*/
+
 
 
 
