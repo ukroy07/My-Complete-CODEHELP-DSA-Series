@@ -4,6 +4,7 @@ class DisjoinSET:
     def __init__(self, n: int):
         self.parent: list[int] = list(range(n+1))
         self.rank : list[int] = [0] * (n+1)
+        self.size : list[int] = [1] * (n+1)
 
     def findUltimateParent(self, node: int):
         if node == self.parent[node]:
@@ -30,17 +31,60 @@ class DisjoinSET:
             return True
 
         return False
+    
+    def findUnionBySize(self, p: int, q: int):
+        ult_p = self.findUltimateParent(p)
+        ult_q = self.findUltimateParent(q)
 
-ds = DisjoinSET(n=7)
+        # if both are not equal, we need to attach the both's ultimate parent
+        if ult_p != ult_q:
+            if self.size[ult_p] < self.size[ult_q]:
+                self.parent[ult_p] = ult_q
+                self.size[ult_q] += self.size[ult_p]
+            elif self.size[ult_p] > self.size[ult_q]:
+                self.parent[ult_q] = ult_p
+                self.size[ult_p] += self.size[ult_q]
+            else:
+                # attach with anyone
+                self.parent[ult_q] = ult_p
+                self.size[ult_p] += self.size[ult_q]
 
-ds.FindUnionByRank(1, 2)
-ds.FindUnionByRank(2, 3)
-ds.FindUnionByRank(4, 5)
-ds.FindUnionByRank(6, 7)
-ds.FindUnionByRank(5, 6)
+            return True
+        
+        return False
 
-print(f"Parent of 3 is {ds.findUltimateParent(3)} and parent of 7 is {ds.findUltimateParent(7)}")
+# ----------------- UNION BY RANK --------------- 
 
-ds.FindUnionByRank(3, 7)
+ds1 = DisjoinSET(n=7)
 
-print(f"Parent of 3 is {ds.findUltimateParent(3)} and parent of 7 is {ds.findUltimateParent(7)}")
+print(f" TASK 1 : {ds1}")
+
+ds1.FindUnionByRank(1, 2)
+ds1.FindUnionByRank(2, 3)
+ds1.FindUnionByRank(4, 5)
+ds1.FindUnionByRank(6, 7)
+ds1.FindUnionByRank(5, 6)
+
+print(f"Parent of 3 is {ds1.findUltimateParent(3)} and parent of 7 is {ds1.findUltimateParent(7)}")
+
+ds1.FindUnionByRank(3, 7)
+
+print(f"Parent of 3 is {ds1.findUltimateParent(3)} and parent of 7 is {ds1.findUltimateParent(7)}")
+
+# ---------------- UNION BY SIZE -----------------
+
+ds2 = DisjoinSET(n=7)
+
+print(f" TASK 2 : {ds2}")
+
+ds2.findUnionBySize(1, 2)
+ds2.findUnionBySize(2, 3)
+ds2.findUnionBySize(4, 5)
+ds2.findUnionBySize(6, 7)
+ds2.findUnionBySize(5, 6)
+
+print(f"Parent of 3 is {ds2.findUltimateParent(3)} and parent of 7 is {ds2.findUltimateParent(7)}")
+
+ds2.findUnionBySize(3, 7)
+
+print(f"Parent of 3 is {ds2.findUltimateParent(3)} and parent of 7 is {ds2.findUltimateParent(7)}")
