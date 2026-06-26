@@ -41,9 +41,6 @@ class DisjoinSET:
             if self.size[ult_p] < self.size[ult_q]:
                 self.parent[ult_p] = ult_q
                 self.size[ult_q] += self.size[ult_p]
-            elif self.size[ult_p] > self.size[ult_q]:
-                self.parent[ult_q] = ult_p
-                self.size[ult_p] += self.size[ult_q]
             else:
                 # attach with anyone
                 self.parent[ult_q] = ult_p
